@@ -34,11 +34,11 @@ void frequencySelect() {
 void dictionarySelect() {
     int count = 0;
     int max = 0;
-    int FrequencyCopy[117];
-    std::copy(FrequencyList, FrequencyList + 117, FrequencyCopy);
-    int n = sizeof(FrequencyList) / sizeof(FrequencyList[0]);
 
-    sort(FrequencyCopy, FrequencyCopy + n, greater<int>());
+    int FrequencyCopy[117];
+    std::copy(FrequencyList, FrequencyList + 117, FrequencyCopy);  //copy the frequencyList to sort
+    int n = sizeof(FrequencyList) / sizeof(FrequencyList[0]);
+    sort(FrequencyCopy, FrequencyCopy + n, greater<int>());  // sorting according to frequency
 
     max = FrequencyCopy[count];
 
@@ -47,7 +47,7 @@ void dictionarySelect() {
         for (size_t i = 0; i < 117; i++)
         {
             if (FrequencyList[i] == max) {
-                Dictionary[count] = OriginalLines[i];
+                Dictionary[count] = OriginalLines[i]; //adding to dictionary according to frequency
                 FrequencyList[i] = 0;
                 count++;
             }
