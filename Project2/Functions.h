@@ -31,18 +31,17 @@ void frequencySelect() {
     }
 }
 
-int largestFreq(int arr[], int n) {
-    int i;
-    int max = arr[0];
-    for (i = 1; i < n; i++)
-        if (arr[i] > max)
-            max = arr[i];
-    return max;
-}
-
 void dictionarySelect() {
     int count = 0;
-    int max = largestFreq(FrequencyList, 117);
+    int max = 0;
+    int FrequencyCopy[117];
+    std::copy(FrequencyList, FrequencyList + 117, FrequencyCopy);
+    int n = sizeof(FrequencyList) / sizeof(FrequencyList[0]);
+
+    sort(FrequencyCopy, FrequencyCopy + n, greater<int>());
+
+    max = FrequencyCopy[count];
+
     while (max != 0)
     {
         for (size_t i = 0; i < 117; i++)
@@ -57,8 +56,7 @@ void dictionarySelect() {
             break;
         }
         else {
-            max = largestFreq(FrequencyList, 117);
+            max = FrequencyCopy[count];
         }
     }
 }
-

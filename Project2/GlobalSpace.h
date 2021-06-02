@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 string OriginalLines[117];  //Lines of the original code to be compressed

@@ -10,6 +10,6 @@ int main() {
     dictionarySelect();
     for (size_t i = 0; i < 16; i++)
     {
-        cout << Dictionary[i]  << endl;
+      cout << Dictionary[i] << endl;
     }
 }
