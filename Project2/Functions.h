@@ -67,8 +67,8 @@ void isDictionaryHit(string line) {
     {
         HitFlag = true;
         int s1 = it - vectDictionary.begin();
-        cout << "111";
-        cout << FourBitLookup[s1] << endl;
+        CompressedLine = "111" + FourBitLookup[s1];
+        cout << CompressedLine << endl;
     }
 }
 
@@ -82,42 +82,42 @@ int hammingWeight(string n) {
     return count;
 }
 
+
 void isOneBitMismatch() {
     for (size_t l = 0; l < 16; l++) {
         if (ones[l] == 1) {
             int idx = compared[l].find("1");
             if (idx != string::npos) {
-                cout << "011" ;
-                cout << FiveBitLookup[idx];
-                cout << FourBitLookup[l] << endl;
+                CompressedLine = "011" + FiveBitLookup[idx] + FourBitLookup[l];
+                cout << CompressedLine << endl;
                 HitFlag = true;
                 return;
             }
         }
     }
 }
+
 void isTwoBitMismatch() {
     for (size_t j = 0; j < 16; j++) {
         if (ones[j] == 2) {
             int idx = compared[j].find("11");
             if (idx != string::npos) {
-                cout << "100";
-                cout << FiveBitLookup[idx];
-                cout << FourBitLookup[j] << endl;
+                CompressedLine = "100" + FiveBitLookup[idx] + FourBitLookup[j];
+                cout << CompressedLine << endl;
                 HitFlag = true;
                 return;
             }
         }
     }
 }
+
 void isFourBitMismatch() {
     for (size_t k = 0; k < 16; k++) {
         if (ones[k] == 4) {
             int idx = compared[k].find("1111");
             if (idx != string::npos) {
-                cout << "101";
-                cout << FiveBitLookup[idx];
-                cout << FourBitLookup[k] << endl;
+                CompressedLine = "101" + FiveBitLookup[idx] + FourBitLookup[k];
+                cout << CompressedLine << endl;
                 HitFlag = true;
                 return;
             }
@@ -132,17 +132,12 @@ void isBitmaskMismatch() {
             for (size_t k = 0; k < 5; k++)
             {
                 idx = compared[j].find(BitMasks[k]);
-                if ((idx != string::npos) && ones[j]==BitMaskOnes[k]){
-                    cout << "010";
-                    cout << " ";
-                    cout << FiveBitLookup[idx];
-                    cout << " ";
-                    cout << BitMasks[k]; 
-                    cout << " ";
-                    cout << FourBitLookup[j] << endl;
+                if ((idx != string::npos) && ones[j] == BitMaskOnes[k]) {
+                    CompressedLine = "010" + FiveBitLookup[idx] + BitMasks[k] + FourBitLookup[j];
+                    cout << CompressedLine << endl;
                     HitFlag = true;
                     return;
-                }               
+                }
             }
         }
     }
@@ -150,11 +145,15 @@ void isBitmaskMismatch() {
 
 
 void isTwoBitMismatch2() {
+    int found = -1;
+    int idx = -1;
     for (size_t j = 0; j < 16; j++) {
         if (ones[j] == 2) {
-            int idx = compared[j].find("11");
-            if (idx == string::npos) {
-                cout << "Two bit not consecutive Mismatch" << endl;
+            idx = compared[j].find("1");
+            found = compared[j].find("1", idx + 1);
+            if ((idx != string::npos) || (found != string::npos)) {
+                CompressedLine = "110" + FiveBitLookup[idx] + FiveBitLookup[found] + FourBitLookup[j];
+                cout << CompressedLine << endl;
                 HitFlag = true;
                 return;
             }
@@ -164,7 +163,7 @@ void isTwoBitMismatch2() {
 
 
 void isIndirectHit(string line) {
-    for (size_t i = 0; i < 16; i++){
+    for (size_t i = 0; i < 16; i++) {
         auto result = std::bitset<32>(Dictionary[i]) ^ std::bitset<32>(line);
         compared[i] = result.to_string();
         ones[i] = hammingWeight(compared[i]);
