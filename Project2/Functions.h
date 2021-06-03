@@ -57,9 +57,6 @@ void dictionarySelect() {
 
 void makeDictionaryVector() {
     for (size_t i = 0; i < 16; i++){
-        //long long value;
-        //std::istringstream iss(Dictionary[i]);
-        //iss >> value;
         vectDictionary.push_back(Dictionary[i]);
     }
 }
@@ -71,7 +68,7 @@ void isDictionaryHit(string line) {
         HitFlag = true;
         int s1 = it - vectDictionary.begin();
         cout << "111";
-        cout << IndexLookup[s1] << endl;
+        cout << FourBitLookup[s1] << endl;
     }
 }
 
@@ -90,7 +87,9 @@ void isOneBitMismatch() {
         if (ones[l] == 1) {
             int idx = compared[l].find("1");
             if (idx != string::npos) {
-                cout << "One bit Mismatch" << endl;
+                cout << "011" ;
+                cout << FiveBitLookup[idx];
+                cout << FourBitLookup[l] << endl;
                 HitFlag = true;
                 return;
             }
@@ -102,7 +101,9 @@ void isTwoBitMismatch() {
         if (ones[j] == 2) {
             int idx = compared[j].find("11");
             if (idx != string::npos) {
-                cout << "Two bit Mismatch" << endl;
+                cout << "100";
+                cout << FiveBitLookup[idx];
+                cout << FourBitLookup[j] << endl;
                 HitFlag = true;
                 return;
             }
@@ -114,7 +115,9 @@ void isFourBitMismatch() {
         if (ones[k] == 4) {
             int idx = compared[k].find("1111");
             if (idx != string::npos) {
-                cout << "Four bit Mismatch" << endl;
+                cout << "101";
+                cout << FiveBitLookup[idx];
+                cout << FourBitLookup[k] << endl;
                 HitFlag = true;
                 return;
             }
@@ -130,8 +133,13 @@ void isBitmaskMismatch() {
             {
                 idx = compared[j].find(BitMasks[k]);
                 if ((idx != string::npos) && ones[j]==BitMaskOnes[k]){
-                    cout << "Bitmask Mismatch";
-                    cout << BitMasks[k] << endl;
+                    cout << "010";
+                    cout << " ";
+                    cout << FiveBitLookup[idx];
+                    cout << " ";
+                    cout << BitMasks[k]; 
+                    cout << " ";
+                    cout << FourBitLookup[j] << endl;
                     HitFlag = true;
                     return;
                 }               
@@ -164,7 +172,7 @@ void isIndirectHit(string line) {
 }
 
 void doRLEEncoding() {
-    cout << "RLE Take actions";
-    cout << SimilarCount - 1 << endl;
+    cout << "001";
+    cout << ThreeBitLookup[SimilarCount - 1] << endl;
     SimilarCount = 0;
 }

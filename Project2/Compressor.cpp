@@ -38,7 +38,8 @@ int main() {
                 isTwoBitMismatch2();
             }
             if (HitFlag == false) {
-                cout << "uncompressed line" << endl;
+                cout << "000";
+                cout << CurrentLine << endl;
             }
         }
         else if (CurrentLine == PreviousLine) {
