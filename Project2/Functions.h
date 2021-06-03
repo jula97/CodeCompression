@@ -69,8 +69,9 @@ void isDictionaryHit(string line) {
     if (it != vectDictionary.end())
     {
         HitFlag = true;
-        std::cout << "Element " << line << " found at position : ";
-        std::cout << it - vectDictionary.begin() << " (counting from zero) \n";
+        int s1 = it - vectDictionary.begin();
+        cout << "111";
+        cout << IndexLookup[s1] << endl;
     }
 }
 
@@ -122,19 +123,18 @@ void isFourBitMismatch() {
 }
 
 void isBitmaskMismatch() {
-    string BitMasks[5] = {"1010","1001","1011","1101","1110"};
     int idx = -1;
     for (size_t j = 0; j < 16; j++) {
         if ((ones[j] == 2) || (ones[j] == 3)) {
             for (size_t k = 0; k < 5; k++)
             {
                 idx = compared[j].find(BitMasks[k]);
-                if (idx != string::npos) { break; }
-            }
-            if (idx != string::npos) {
-                cout << "Bitmask Mismatch" << endl;
-                HitFlag = true;
-                return;
+                if ((idx != string::npos) && ones[j]==BitMaskOnes[k]){
+                    cout << "Bitmask Mismatch";
+                    cout << BitMasks[k] << endl;
+                    HitFlag = true;
+                    return;
+                }               
             }
         }
     }
@@ -161,4 +161,10 @@ void isIndirectHit(string line) {
         compared[i] = result.to_string();
         ones[i] = hammingWeight(compared[i]);
     }
+}
+
+void doRLEEncoding() {
+    cout << "RLE Take actions";
+    cout << SimilarCount - 1 << endl;
+    SimilarCount = 0;
 }

@@ -8,40 +8,46 @@ int main() {
     readOriginal();
     frequencySelect();
     dictionarySelect();
-    for (size_t i = 0; i < 16; i++)
-    {
-      cout << Dictionary[i] << endl;
-    }
+
     makeDictionaryVector();
 
 
     for (size_t i = 0; i < 117; i++)
     {
-
-
-        string test = OriginalLines[i];
-        HitFlag = false;
-
-        isDictionaryHit(test);
-
-        if (HitFlag == false) {
-            isIndirectHit(test);
-            isOneBitMismatch();
+        CurrentLine = OriginalLines[i];
+        if (CurrentLine != PreviousLine) {
+            if (SimilarCount != 0) {
+                doRLEEncoding();
+            }
+            HitFlag = false;
+            isDictionaryHit(CurrentLine);
+            if (HitFlag == false) {
+                isIndirectHit(CurrentLine);
+                isOneBitMismatch();
+            }
+            if (HitFlag == false) {
+                isTwoBitMismatch();
+            }
+            if (HitFlag == false) {
+                isFourBitMismatch();
+            }
+            if (HitFlag == false) {
+                isBitmaskMismatch();
+            }
+            if (HitFlag == false) {
+                isTwoBitMismatch2();
+            }
+            if (HitFlag == false) {
+                cout << "uncompressed line" << endl;
+            }
         }
-        if (HitFlag == false) {
-            isTwoBitMismatch();
+        else if (CurrentLine == PreviousLine) {
+            SimilarCount++;
+            if (SimilarCount == 8) {
+                doRLEEncoding();
+                CurrentLine = "AAAA";
+            }
         }
-        if (HitFlag == false) {
-            isFourBitMismatch();
-        }
-        if (HitFlag == false) {
-            isBitmaskMismatch();
-        }
-        if (HitFlag == false) {
-            isTwoBitMismatch2();
-        }
-        if (HitFlag == false) {
-            cout << "uncompressed line" << endl;
-        }
+        PreviousLine = CurrentLine;
     }
 }

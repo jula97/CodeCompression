@@ -10,3 +10,4 @@ void isTwoBitMismatch();
 void isFourBitMismatch();
 void isTwoBitMismatch2();
 void isBitmaskMismatch();
+void doRLEEncoding();
