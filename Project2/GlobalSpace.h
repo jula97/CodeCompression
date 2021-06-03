@@ -31,3 +31,4 @@ int BitMaskOnes[5] = { 2,2,3,3,3 };
 string CompressedLine;
 vector<string> CompressedCode;
 int TotalLength;
+ofstream MyFile("filename.txt");

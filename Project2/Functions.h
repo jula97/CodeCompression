@@ -182,3 +182,50 @@ void doRLEEncoding() {
     CompressedCode.push_back(CompressedLine);
     SimilarCount = 0;
 }
+
+void writeCompressed() {
+    for (size_t j = 0; j < CompressedCode.size(); j++) {
+        int s3 = 32 - TotalLength % 32;
+        if (s3 + 1 > CompressedCode[j].length()) {
+            MyFile << CompressedCode[j];
+            if (((TotalLength + CompressedCode[j].length()) % 32) == 0) {
+                MyFile << endl;
+            }
+        }
+        else {
+            string s4 = CompressedCode[j].substr(0, s3);
+            string s5 = CompressedCode[j].substr((s3), (CompressedCode[j].length() - s3));
+            if (((TotalLength + CompressedCode[j].length()) % 32) == 0) {
+                MyFile << s4 << endl;
+                if (s5.length() > 32) {
+                    MyFile << s5.substr(0, 32) << endl;
+                    MyFile << s5.substr(32, s5.length() - 32) << endl;
+                }
+                else {
+                    MyFile << s5 << endl;
+                }
+            }
+            else {
+                MyFile << s4 << endl;
+                if (s5.length() > 32) {
+                    MyFile << s5.substr(0, 32) << endl;
+                    MyFile << s5.substr(32, s5.length() - 32);
+                }
+                else {
+                    MyFile << s5;
+                }
+            }
+        }
+        TotalLength += CompressedCode[j].length();
+    }
+    for (size_t k = 0; k < 32 - (TotalLength % 32); k++) {
+        MyFile << "0";
+    }
+    MyFile << endl;
+}
+
+void writeDictionary() {
+    for (size_t i = 0; i < 16; i++){
+        MyFile << Dictionary[i] << endl;
+    }
+}

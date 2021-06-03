@@ -8,12 +8,9 @@ int main() {
     readOriginal();
     frequencySelect();
     dictionarySelect();
-
     makeDictionaryVector();
 
-
-    for (size_t i = 0; i < 117; i++)
-    {
+    for (size_t i = 0; i < 117; i++) {
         CurrentLine = OriginalLines[i];
         if (CurrentLine != PreviousLine) {
             if (SimilarCount != 0) {
@@ -51,11 +48,8 @@ int main() {
         }
         PreviousLine = CurrentLine;
     }
-    //cout << "XXXXXXXXXXXXXXXXXX" << endl;
-    for (size_t j = 0; j < CompressedCode.size(); j++){
-        cout << CompressedCode[j] << endl;
-        TotalLength += CompressedCode[j].length();
-    }
-    cout << TotalLength << endl;
 
+    writeCompressed();
+    MyFile << "xxxx" << endl;
+    writeDictionary();
 }
