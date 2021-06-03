@@ -38,8 +38,8 @@ int main() {
                 isTwoBitMismatch2();
             }
             if (HitFlag == false) {
-                cout << "000";
-                cout << CurrentLine << endl;
+                CompressedLine = "000" + CurrentLine;
+                CompressedCode.push_back(CompressedLine);
             }
         }
         else if (CurrentLine == PreviousLine) {
@@ -51,4 +51,11 @@ int main() {
         }
         PreviousLine = CurrentLine;
     }
+    //cout << "XXXXXXXXXXXXXXXXXX" << endl;
+    for (size_t j = 0; j < CompressedCode.size(); j++){
+        cout << CompressedCode[j] << endl;
+        TotalLength += CompressedCode[j].length();
+    }
+    cout << TotalLength << endl;
+
 }

@@ -29,3 +29,5 @@ string ThreeBitLookup[8] = { "000","001","010","011","100","101","110","111" };
 string BitMasks[5] = { "1010","1001","1011","1101","1110" };
 int BitMaskOnes[5] = { 2,2,3,3,3 };
 string CompressedLine;
+vector<string> CompressedCode;
+int TotalLength;

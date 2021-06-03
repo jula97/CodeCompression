@@ -68,7 +68,8 @@ void isDictionaryHit(string line) {
         HitFlag = true;
         int s1 = it - vectDictionary.begin();
         CompressedLine = "111" + FourBitLookup[s1];
-        cout << CompressedLine << endl;
+        //cout << CompressedLine << endl;
+        CompressedCode.push_back(CompressedLine);
     }
 }
 
@@ -89,7 +90,8 @@ void isOneBitMismatch() {
             int idx = compared[l].find("1");
             if (idx != string::npos) {
                 CompressedLine = "011" + FiveBitLookup[idx] + FourBitLookup[l];
-                cout << CompressedLine << endl;
+                //cout << CompressedLine << endl;
+                CompressedCode.push_back(CompressedLine);
                 HitFlag = true;
                 return;
             }
@@ -103,7 +105,8 @@ void isTwoBitMismatch() {
             int idx = compared[j].find("11");
             if (idx != string::npos) {
                 CompressedLine = "100" + FiveBitLookup[idx] + FourBitLookup[j];
-                cout << CompressedLine << endl;
+                //cout << CompressedLine << endl;
+                CompressedCode.push_back(CompressedLine);
                 HitFlag = true;
                 return;
             }
@@ -117,7 +120,8 @@ void isFourBitMismatch() {
             int idx = compared[k].find("1111");
             if (idx != string::npos) {
                 CompressedLine = "101" + FiveBitLookup[idx] + FourBitLookup[k];
-                cout << CompressedLine << endl;
+                //cout << CompressedLine << endl;
+                CompressedCode.push_back(CompressedLine);
                 HitFlag = true;
                 return;
             }
@@ -134,7 +138,8 @@ void isBitmaskMismatch() {
                 idx = compared[j].find(BitMasks[k]);
                 if ((idx != string::npos) && ones[j] == BitMaskOnes[k]) {
                     CompressedLine = "010" + FiveBitLookup[idx] + BitMasks[k] + FourBitLookup[j];
-                    cout << CompressedLine << endl;
+                    //cout << CompressedLine << endl;
+                    CompressedCode.push_back(CompressedLine);
                     HitFlag = true;
                     return;
                 }
@@ -153,7 +158,8 @@ void isTwoBitMismatch2() {
             found = compared[j].find("1", idx + 1);
             if ((idx != string::npos) || (found != string::npos)) {
                 CompressedLine = "110" + FiveBitLookup[idx] + FiveBitLookup[found] + FourBitLookup[j];
-                cout << CompressedLine << endl;
+                //cout << CompressedLine << endl;
+                CompressedCode.push_back(CompressedLine);
                 HitFlag = true;
                 return;
             }
@@ -171,7 +177,8 @@ void isIndirectHit(string line) {
 }
 
 void doRLEEncoding() {
-    cout << "001";
-    cout << ThreeBitLookup[SimilarCount - 1] << endl;
+    CompressedLine = "001" + ThreeBitLookup[SimilarCount - 1];
+    //cout << CompressedLine << endl;
+    CompressedCode.push_back(CompressedLine);
     SimilarCount = 0;
 }
