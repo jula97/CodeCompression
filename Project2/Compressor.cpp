@@ -50,5 +50,12 @@ int main() {
             }
         }
         PreviousLine = CurrentLine;
+        CompressedLines[i] = CompressedLine;
+        CompressedLineLength += CompressedLine.length();
     }
+    for (size_t j = 0; j < 117; j++){
+        cout << CompressedLines[j] << endl;
+    }
+    cout << (CompressedLineLength % 32) << endl;
+
 }
