@@ -1,7 +1,7 @@
 void readOriginal() {
     ifstream inFile("original.txt");
     string line;
-    int lineNo = 0;
+    lineNo = 0;
     while (getline(inFile, line)) {
         OriginalLines[lineNo] = line;
         lineNo++;
@@ -11,15 +11,15 @@ void readOriginal() {
 
 void frequencySelect() {
     string line;
-    string OriginalCopy[117];
-    std::copy(OriginalLines, OriginalLines + 117, OriginalCopy);
+    string OriginalCopy[1024];
+    std::copy(OriginalLines, OriginalLines + 1024, OriginalCopy);
 
-    for (size_t i = 0; i < 117; i++)
+    for (size_t i = 0; i < lineNo; i++)
     {
         line = OriginalCopy[i];
         if (OriginalCopy[i] != "0") {
             int frequency = 0;
-            for (size_t j = 0; j < 117; j++)  //find the frequency of occurance of a line
+            for (size_t j = 0; j < lineNo; j++)  //find the frequency of occurance of a line
             {
                 if (OriginalCopy[j] == line) {
                     frequency++;
@@ -32,8 +32,8 @@ void frequencySelect() {
 }
 
 void dictionarySelect() {
-    int FrequencyCopy[117];
-    std::copy(FrequencyList, FrequencyList + 117, FrequencyCopy); //copying the frequency list for sorting
+    int FrequencyCopy[1024];
+    std::copy(FrequencyList, FrequencyList + 1024, FrequencyCopy); //copying the frequency list for sorting
     int n = sizeof(FrequencyList) / sizeof(FrequencyList[0]);
     sort(FrequencyCopy, FrequencyCopy + n, greater<int>()); //sorting the Frequencies
     
@@ -41,7 +41,7 @@ void dictionarySelect() {
     int max = FrequencyCopy[count];
 
     while (max != 0){
-        for (size_t i = 0; i < 117; i++){
+        for (size_t i = 0; i < lineNo; i++){
             if (FrequencyList[i] == max) {
                 Dictionary[count] = OriginalLines[i]; //assigning dictionary entries
                 FrequencyList[i] = 0;

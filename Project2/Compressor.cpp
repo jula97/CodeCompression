@@ -10,7 +10,7 @@ int main() {
     dictionarySelect();
     makeDictionaryVector();
 
-    for (size_t i = 0; i < 117; i++) {
+    for (size_t i = 0; i < lineNo; i++) {
         CurrentLine = OriginalLines[i];
         if (CurrentLine != PreviousLine) {
             if (SimilarCount != 0) {
@@ -44,6 +44,9 @@ int main() {
             if (SimilarCount == 8) {
                 doRLEEncoding();
                 CurrentLine = "AAAA";
+            }
+            if (i == lineNo-1) {
+                doRLEEncoding();
             }
         }
         PreviousLine = CurrentLine;

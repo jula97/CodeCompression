@@ -7,8 +7,8 @@
 #include <bitset>
 using namespace std;
 
-string OriginalLines[117];  //Lines of the original code to be compressed
-int FrequencyList[117];     //Frequency of unique lines
+string OriginalLines[1024];  //Lines of the original code to be compressed
+int FrequencyList[1024];     //Frequency of unique lines
 string Dictionary[16];      //Dictionary for compression
 vector<string> vectDictionary;
 std::vector<string>::iterator it;
@@ -32,3 +32,4 @@ string CompressedLine;
 vector<string> CompressedCode;
 int TotalLength;
 ofstream MyFile("filename.txt");
+int lineNo;
