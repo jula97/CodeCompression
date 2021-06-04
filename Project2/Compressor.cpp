@@ -5,13 +5,16 @@
 #include <vector>
 #include <sstream>
 #include <bitset>
+#include <map>
+
 //#include "GlobalSpace.h"
 //#include "Functions.h"
 //#include "FunctionList.h"
 using namespace std;
+typedef std::pair <int, int> IntPair;
 
 vector<string> OriginalLines;  //Lines of the original code to be compressed
-int FrequencyList[1024];     //Frequency of unique lines
+vector<int> FrequencyList;     //Frequency of unique lines
 string Dictionary[16];      //Dictionary for compression
 vector<string> vectDictionary;
 std::vector<string>::iterator it;
@@ -35,11 +38,14 @@ string CompressedLine;
 vector<string> CompressedCode;
 int TotalLength;
 ofstream MyFile("filename.txt");
-int lineNo = 0;
+int lineNo;
+map<string, int> freqMap;
+vector <IntPair> pairs;
 
 void readOriginal() {
     ifstream inFile("original.txt");
     string line;
+    lineNo = 0;
     while (getline(inFile, line)) {
         OriginalLines.push_back(line);
         lineNo++;
@@ -54,7 +60,7 @@ void frequencySelect() {
     for (int j = 0; j < OriginalLines.size(); j++) {
         OriginalCopy.push_back(OriginalLines[j]);
     }
-
+    //long multi = 0.001;
     for (size_t i = 0; i < lineNo; i++)
     {
         line = OriginalCopy[i];
@@ -67,34 +73,31 @@ void frequencySelect() {
                     OriginalCopy[j] = "0";
                 }
             }
-            FrequencyList[i] = frequency;
+            //freqMap.insert(pair<string, int>(line , frequency));
+            FrequencyList.push_back(frequency);
+            pairs.push_back(std::make_pair(i, frequency));
+            //cout << "gg" << endl;
         }
     }
 }
 
 void dictionarySelect() {
-    vector<int> FrequencyCopy;
-    for (int j = 0; j < 1024 ; j++) {
-        FrequencyCopy.push_back(FrequencyList[j]);
-    }
-
-    sort(FrequencyCopy.begin(), FrequencyCopy.end(), greater<int>());
+    sort(FrequencyList.begin(), FrequencyList.end(), greater<int>());
 
     int count = 0;
-    int max = FrequencyCopy[count];
+    int max = FrequencyList[count];
 
-    while (max != 0) {
-        for (size_t i = 0; i < lineNo; i++) {
-            if (FrequencyList[i] == max) {
-                Dictionary[count] = OriginalLines[i]; //assigning dictionary entries
-                FrequencyList[i] = 0;
+    while (count != 16) {
+        for (size_t i = 0; i < pairs.size(); i++) {
+            pair<int, int> temp = pairs[i];
+            if (max == temp.second) {
+                Dictionary[count] = OriginalLines[temp.first];
                 count++;
-                if (count == 16) {
-                    return;
-                }
+                pairs[i].second = 0;
+                max = FrequencyList[count];
+                break;
             }
         }
-        max = FrequencyCopy[count];
     }
 }
 
@@ -277,7 +280,7 @@ int main() {
     dictionarySelect();
     makeDictionaryVector();
 
-    for (size_t i = 0; i < 117; i++) {
+    for (size_t i = 0; i < lineNo; i++) {
         CurrentLine = OriginalLines[i];
         if (CurrentLine != PreviousLine) {
             if (SimilarCount != 0) {
@@ -311,6 +314,9 @@ int main() {
             if (SimilarCount == 8) {
                 doRLEEncoding();
                 CurrentLine = "AAAA";
+            }
+            if (i == lineNo - 1) {
+                doRLEEncoding();
             }
         }
         PreviousLine = CurrentLine;
