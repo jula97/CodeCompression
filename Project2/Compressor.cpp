@@ -51,7 +51,6 @@ void readOriginal() {
         lineNo++;
     }
     inFile.close();
-    //cout << lineNo << endl;
 }
 
 void frequencySelect() {
@@ -279,8 +278,8 @@ int main() {
     frequencySelect();
     dictionarySelect();
     makeDictionaryVector();
-
-    for (size_t i = 0; i < lineNo; i++) {
+    size_t i = 0;
+    for (i = 0; i < lineNo; i++) {
         CurrentLine = OriginalLines[i];
         if (CurrentLine != PreviousLine) {
             if (SimilarCount != 0) {
@@ -315,7 +314,7 @@ int main() {
                 doRLEEncoding();
                 CurrentLine = "AAAA";
             }
-            if (i == lineNo - 1) {
+            if ((i == lineNo - 1) && (SimilarCount!=0)) {
                 doRLEEncoding();
             }
         }
@@ -323,6 +322,11 @@ int main() {
     }
 
     writeCompressed();
+    //int x = CompressedCode.size();
+    //for (size_t i = 0; i < x-1; i++)
+    //{
+    //    MyFile << CompressedCode[i] << endl;
+    //}
     MyFile << "xxxx" << endl;
     writeDictionary();
 }
